@@ -73,7 +73,7 @@ export default function AccordionSections() {
     <section className="px-4 py-8 max-w-5xl mx-auto space-y-2">
       {sections.map((section, idx) => (
         <AccordionItem key={idx} title={section.title}>
-          <p className="text-foreground/70 whitespace-pre-line">{section.content}</p>
+          <p className="text-foreground/70 whitespace-pre-line font-body">{section.content}</p>
         </AccordionItem>
       ))}
     </section>
@@ -84,10 +84,10 @@ function AccordionItem({ title, children }) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="border-b border-border">
+    <div className="bg-[#18191B] border border-surgical rounded-lg overflow-hidden border-surgical-hover transition-colors">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full py-5 flex items-center justify-between text-left font-mono text-lg"
+        className="w-full py-5 px-6 flex items-center justify-between text-left font-mono text-lg hover:bg-white/5 transition-colors"
       >
         <span>{title}</span>
         <ChevronDown className={`w-5 h-5 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
@@ -100,7 +100,7 @@ function AccordionItem({ title, children }) {
             exit={{ height: 0, opacity: 0 }}
             className="overflow-hidden"
           >
-            <div className="pb-5 text-foreground/70">
+            <div className="pb-5 px-6 font-body text-foreground/70">
               {children}
             </div>
           </motion.div>

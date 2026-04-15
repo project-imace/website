@@ -9,7 +9,7 @@ export default function DescriptionSection() {
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
-        className="space-y-4 text-foreground/80"
+        className="space-y-4 text-foreground/80 bg-[#18191B] border border-surgical rounded-lg p-8 font-body"
       >
         <h2 className="font-mono text-3xl text-foreground mb-6">Revarie</h2>
         <p>Revarie is the overarching research framework of Project IMACE.</p>
