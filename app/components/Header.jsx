@@ -1,5 +1,4 @@
-import Image from 'next/image';
-import Link from 'next/link';
+/* eslint-disable @next/next/no-img-element */
 
 export default function Header() {
   return (
