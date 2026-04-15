@@ -7,7 +7,7 @@ export default function Header() {
         <img 
           src="https://assets.imace.online/image/imace.svg" 
           alt="IMACE Logo" 
-          className="h-6 w-auto opacity-80" 
+          className="h-10 w-auto opacity-80" 
         />
         <span className="font-mono text-xs tracking-[0.3em] uppercase hidden sm:block text-white/80">
           Revarie Research
