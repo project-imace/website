@@ -7,7 +7,7 @@ export default function Header() {
         <img 
           src="https://assets.imace.online/image/imace.svg" 
           alt="IMACE Logo" 
-          className="w-8 h-auto opacity-80"
+          className="w-14 h-auto opacity-80"
         />
         {/* We can hide the text entirely or rotate it, keeping it hidden for the surgical rail look */}
       </div>

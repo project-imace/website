@@ -1,6 +1,6 @@
 export default function GridBackground() {
   return (
-    <div className="fixed inset-0 z-0 pointer-events-none w-full h-full bg-[#0E0E10] grid-background-mask">
+    <div className="fixed inset-0 z-[-1] pointer-events-none w-full h-full bg-[#0E0E10] grid-background-mask">
       <div className="absolute inset-0 studio-grid"></div>
 
       <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
@@ -9,7 +9,7 @@ export default function GridBackground() {
             {`
               @keyframes pulse-glow {
                 0%, 100% { opacity: 0; }
-                50% { opacity: 0.08; }
+                50% { opacity: 0.25; }
               }
               .glow-rect {
                 fill: #ffffff;
