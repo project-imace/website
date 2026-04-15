@@ -2,22 +2,18 @@
 
 export default function Header() {
   return (
-    <nav className="w-full flex justify-between items-center py-8 border-b border-white/5">
-      <div className="flex items-center gap-3">
+    <nav className="w-[64px] h-screen fixed top-0 left-0 flex flex-col items-center py-6 border-r border-surgical backdrop-blur-xl bg-[#0E0E10]/80 z-50">
+      <div className="flex flex-col items-center gap-6 w-full">
         <img 
           src="https://assets.imace.online/image/imace.svg" 
           alt="IMACE Logo" 
-          className="h-10 w-auto opacity-80" 
+          className="w-8 h-auto opacity-80"
         />
-        <span className="font-mono text-xs tracking-[0.3em] uppercase hidden sm:block text-white/80">
-          Revarie Research
-        </span>
+        {/* We can hide the text entirely or rotate it, keeping it hidden for the surgical rail look */}
       </div>
       
-      <div className="flex gap-6 font-mono text-[10px] tracking-widest text-white/50">
-        <span className="hover:text-white transition-colors uppercase text-[#4ade80]">
-          [ Status: Online ]
-        </span>
+      <div className="mt-auto mb-6 flex flex-col items-center">
+        <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" title="Status: Online"></div>
       </div>
     </nav>
   );
