@@ -5,7 +5,7 @@ export default function Header() {
     <nav className="w-full flex justify-between items-center py-8 border-b border-white/5">
       <div className="flex items-center gap-3">
         <img 
-          src="https://assets.imace.online/image/imace logo.png" 
+          src="https://assets.imace.online/image/imace.svg" 
           alt="IMACE Logo" 
           className="h-6 w-auto opacity-80" 
         />
