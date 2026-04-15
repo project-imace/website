@@ -13,7 +13,7 @@ export default function Footer() {
             <a href="mailto:coordinator@imace.online" className="hover:text-foreground">coordinator@imace.online</a>
           </div>
           <div className="flex items-center gap-6">
-            <Image src="https://assets.imace.online/image/alternresearch.svg" alt="Altern Research" width={80} height={60} className="h-5 w-auto opacity-60 hover:opacity-100 transition" />
+            <Image src="https://assets.imace.online/image/alternresearch.svg" alt="Altern Research" width={80} height={60} className="h-5 w-auto opacity-90 hover:opacity-100 transition" />
             <Image src="https://assets.imace.online/image/arcbmm.svg" alt="ARC BMM" width={80} height={60} className="h-5 w-auto opacity-90 hover:opacity-100 transition" />
             <Image src="https://assets.imace.online/image/arcami.svg" alt="Arcami" width={80} height={60} className="h-5 w-auto opacity-90 hover:opacity-100 transition" />
           </div>
