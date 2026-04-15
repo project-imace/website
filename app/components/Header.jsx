@@ -1,25 +1,25 @@
-'use client';
-
 import Image from 'next/image';
 import Link from 'next/link';
-import { Mail, Github } from 'lucide-react';
 
 export default function Header() {
   return (
-    <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border px-4 md:px-6 py-3">
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2">
-          <Image src="https://assets.imace.online/image/imace.svg" alt="IMACE" width={120} height={30} className="h-6 w-auto" />
-        </Link>
-        <div className="flex items-center gap-4">
-          <a href="https://github.com/project-imace" target="_blank" rel="noopener noreferrer" className="text-foreground/70 hover:text-foreground transition">
-            <Github className="w-5 h-5" />
-          </a>
-          <a href="mailto:reach@imace.online" className="text-foreground/70 hover:text-foreground transition">
-            <Mail className="w-5 h-5" />
-          </a>
-        </div>
+    <nav className="w-full flex justify-between items-center py-8 border-b border-white/5">
+      <div className="flex items-center gap-3">
+        <img 
+          src="https://assets.imace.online/image/imace logo.png" 
+          alt="IMACE Logo" 
+          className="h-6 w-auto opacity-80" 
+        />
+        <span className="font-mono text-xs tracking-[0.3em] uppercase hidden sm:block text-white/80">
+          Revarie Research
+        </span>
       </div>
-    </header>
+      
+      <div className="flex gap-6 font-mono text-[10px] tracking-widest text-white/50">
+        <span className="hover:text-white transition-colors uppercase text-[#4ade80]">
+          [ Status: Online ]
+        </span>
+      </div>
+    </nav>
   );
 }
