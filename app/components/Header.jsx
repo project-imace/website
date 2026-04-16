@@ -7,7 +7,7 @@ export default function Header() {
         <img 
           src="https://assets.imace.online/image/imace.svg" 
           alt="IMACE Logo" 
-          className="w-40 h-auto opacity-80"
+          className="w-40 h-auto opacity-70"
         />
       
       </div>
