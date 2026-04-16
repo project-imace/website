@@ -7,13 +7,13 @@ export default function Header() {
         <img 
           src="https://assets.imace.online/image/imace.svg" 
           alt="IMACE Logo" 
-          className="w-14 h-auto opacity-80"
+          className="w-23 h-auto opacity-80"
         />
-        {/* We can hide the text entirely or rotate it, keeping it hidden for the surgical rail look */}
+      
       </div>
       
       <div className="flex flex-row items-center">
-        <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" title="Status: Online"></div>
+        <div className="w-4 h-4 rounded-full bg-green-500 animate-pulse" title="Status: Online"></div>
       </div>
     </nav>
   );
