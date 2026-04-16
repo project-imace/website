@@ -19,7 +19,7 @@ export default function ActiveModelsTable() {
           <tbody>
             <tr className="border-b border-surgical">
               <td className="py-4 pr-4">Revarie LM</td>
-              <td className="py-4 px-4 font-body">Cognitive Emulation</td>
+              <td className="py-4 px-4 font-body">CoEm - Language Models</td>
               <td className="py-4 px-4">v1.0</td>
               <td className="py-4 pl-4">
                 <span className="flex items-center gap-2">
