@@ -2,6 +2,7 @@
 
 import ChatBubble from '@/features/chat/components/ChatBubble';
 import Terminal from '@/features/chat/components/Terminal';
+import { sendChatMessage } from '@/lib/chat';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Send, Terminal as TerminalIcon } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
@@ -24,11 +25,19 @@ export default function ArteryPage() {
     setInput('');
     setIsProcessing(true);
 
-    setTimeout(() => {
-      const assistantMessage = { role: 'assistant', content: `> Query processed. Response: Input acknowledged.` };
+    try {
+      const response = await sendChatMessage(input, 'artery');
+      const assistantMessage = { role: 'assistant', content: response.response };
       setMessages(prev => [...prev, assistantMessage]);
+    } catch (error) {
+      console.error('Chat Error:', error);
+      setMessages(prev => [...prev, { 
+        role: 'assistant', 
+        content: `> ERROR: CONNECTION_FAILED. SYSTEM_READY_FOR_RETRY.` 
+      }]);
+    } finally {
       setIsProcessing(false);
-    }, 1000);
+    }
   };
 
   return (

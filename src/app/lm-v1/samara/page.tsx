@@ -2,6 +2,7 @@
 
 import ChatBubble from '@/features/chat/components/ChatBubble';
 import ThinkingTree from '@/features/chat/components/ThinkingTree';
+import { sendChatMessage } from '@/lib/chat';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Heart, Send } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
@@ -26,23 +27,31 @@ export default function SamaraPage() {
     setIsTyping(true);
     setIsThinking(true);
 
-    // Simulate thinking steps (in production, this comes from backend)
-    const thinkingSteps = [
-      'Analyzing emotional tone...',
-      'Retrieving relevant memories...',
-      'Formulating empathetic response...'
-    ];
-
-    setTimeout(() => {
+    try {
+      const response = await sendChatMessage(input, 'samara');
+      
       setIsThinking(false);
       const assistantMessage = {
         role: 'assistant',
-        content: `I hear you, and I'm here with you. ${input.length > 20 ? 'That sounds meaningful.' : 'Tell me more?'}`,
-        thinking: thinkingSteps
+        content: response.response,
+        // Using sample thinking steps for visual feedback as the API doesn't provide them yet
+        thinking: [
+          'Analyzing emotional tone...',
+          'Retrieving relevant memories...',
+          'Formulating empathetic response...'
+        ]
       };
       setMessages(prev => [...prev, assistantMessage]);
+    } catch (error) {
+      console.error('Chat Error:', error);
+      setMessages(prev => [...prev, { 
+        role: 'assistant', 
+        content: "I'm sorry, I'm having trouble connecting right now. Please try again later." 
+      }]);
+    } finally {
       setIsTyping(false);
-    }, 2000);
+      setIsThinking(false);
+    }
   };
 
   return (
