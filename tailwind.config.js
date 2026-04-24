@@ -1,36 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
-    './app/**/*.{js,ts,jsx,tsx,mdx}',
-    './components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/**/*.{js,ts,jsx,tsx,mdx}',
   ],
-  theme: {
-    extend: {
-      fontFamily: {
-        mono: ['"Space Mono"', 'monospace'],
-        body: ['"Inclusive Sans"', 'sans-serif'],
-      },
-      colors: {
-        background: '#000000',
-        foreground: '#ffffff',
-        muted: '#0a0a0a',
-        border: 'rgba(255, 255, 255, 0.1)',
-      },
-      animation: {
-        'fade-in': 'fadeIn 0.8s ease-out',
-        'slide-up': 'slideUp 0.6s ease-out',
-      },
-      keyframes: {
-        fadeIn: {
-          from: { opacity: '0' },
-          to: { opacity: '1' },
-        },
-        slideUp: {
-          from: { opacity: '0', transform: 'translateY(20px)' },
-          to: { opacity: '1', transform: 'translateY(0)' },
-        },
-      },
-    },
-  },
   plugins: [],
 };

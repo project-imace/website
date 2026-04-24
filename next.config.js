@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'standalone',
+  reactStrictMode: true,
   images: {
     remotePatterns: [
       {
@@ -10,17 +10,6 @@ const nextConfig = {
         pathname: '/**',
       },
     ],
-  },
-  experimental: {
-    optimizeCss: true,
-  },
-  async rewrites() {
-    return [
-      {
-        source: '/lm-v1/:path*',
-        destination: 'https://revarielmv1.vercel.app/lm-v1/:path*',
-      },
-    ];
   },
 };
 

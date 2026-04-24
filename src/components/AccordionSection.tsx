@@ -1,11 +1,21 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, type ReactNode } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 
+interface AccordionSectionItem {
+  title: string;
+  content: string;
+}
+
+interface AccordionItemProps {
+  title: string;
+  children: ReactNode;
+}
+
 // Complete content from PDF
-const accordionContent = {
+const accordionContent: Record<string, AccordionSectionItem> = {
   research: {
     title: "Research on the Empirical Values of Anthropomorphic Reflections in Intelligence Emulation",
     content: "This research program investigates the measurable effects of anthropomorphic design in AI systems on human cognition, emotion, and behavior. It seeks to quantify how and when humans attribute agency, intentionality, and affect to simulated cognitive systems."
@@ -80,7 +90,7 @@ export default function AccordionSections() {
   );
 }
 
-function AccordionItem({ title, children }) {
+function AccordionItem({ title, children }: AccordionItemProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
