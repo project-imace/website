@@ -19,7 +19,7 @@
   --color-surface: #1A1A1C;
   --color-border: #2A2A2C;
   --color-samara-warm: #D4A373;
-  --color-artery-green: #00FF00;
+  --color-artery-green: #A3B1C6;
   --color-foreground: #ffffff;
   --color-border-hover: #3C4043;
   --color-primary: #1A73E8;
@@ -130,16 +130,6 @@ h1, h2, h3, h4, h5, h6 {
     background: radial-gradient(circle at 50% 50%, rgba(212, 163, 115, 0.08) 0%, rgba(0, 0, 0, 1) 80%);
   }
   .bg-artery-grid {
-    background-size: 50px 50px;
-    background-image:
-      linear-gradient(to right, rgba(0, 255, 0, 0.03) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(0, 255, 0, 0.03) 1px, transparent 1px);
-    animation: gridMove 30s linear infinite;
-  }
-  .scan-line {
-    position: absolute; top: 0; left: 0; right: 0; height: 2px;
-    background: rgba(0, 255, 0, 0.4);
-    box-shadow: 0 0 15px rgba(0, 255, 0, 0.8);
-    animation: scan 4s linear infinite;
+    background-color: var(--color-background);
   }
 }

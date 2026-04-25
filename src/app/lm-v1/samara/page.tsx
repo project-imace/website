@@ -55,7 +55,7 @@ export default function SamaraPage() {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-background bg-samara-gradient relative overflow-hidden">
+    <div className="flex flex-col h-[100dvh] bg-background bg-samara-gradient relative overflow-hidden">
       {/* Header */}
       <header className="flex items-center justify-between px-6 py-4 border-b border-white/10 bg-background/80 backdrop-blur">
         <div className="flex items-center gap-3">
@@ -102,13 +102,23 @@ export default function SamaraPage() {
       {/* Input Area */}
       <div className="p-4 border-t border-white/10 bg-surface/50 backdrop-blur">
         <div className="flex gap-3 max-w-4xl mx-auto">
-          <input
-            type="text"
+          <textarea
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && handleSend()}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                handleSend();
+              }
+            }}
             placeholder="Type your message..."
-            className="flex-1 bg-white/5 border border-white/10 rounded-full px-5 py-3 text-white placeholder-white/30 focus:outline-none focus:border-samara-warm/50 transition-colors font-body"
+            rows={1}
+            className="flex-1 bg-white/5 border border-white/10 rounded-[24px] px-5 py-3 text-white placeholder-white/30 focus:outline-none focus:border-samara-warm/50 transition-colors font-body resize-none overflow-hidden max-h-32"
+            onInput={(e) => {
+              const target = e.target as HTMLTextAreaElement;
+              target.style.height = 'auto';
+              target.style.height = Math.min(target.scrollHeight, 128) + 'px';
+            }}
           />
           <button
             aria-label="Send"
