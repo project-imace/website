@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 
 interface ChatBubbleProps {
   role: 'user' | 'assistant';
@@ -12,6 +13,31 @@ interface ChatBubbleProps {
 export default function ChatBubble({ role, content, persona = 'samara', isProcessing = false }: ChatBubbleProps) {
   const isUser = role === 'user';
   const isArtery = persona === 'artery';
+
+  const [displayedContent, setDisplayedContent] = useState(isUser ? content : '');
+
+  useEffect(() => {
+    if (isUser) {
+      setDisplayedContent(content);
+      return;
+    }
+
+    let currentIndex = 0;
+    // Faster typing for Samara, more terminal-like for Artery
+    const intervalTime = isArtery ? 15 : 8;
+
+    const interval = setInterval(() => {
+      if (currentIndex < content.length - 1) {
+        setDisplayedContent(prev => prev + content[currentIndex]);
+        currentIndex++;
+      } else {
+        setDisplayedContent(content);
+        clearInterval(interval);
+      }
+    }, intervalTime);
+
+    return () => clearInterval(interval);
+  }, [content, isUser, isArtery]);
 
   return (
     <motion.div
@@ -36,13 +62,16 @@ export default function ChatBubble({ role, content, persona = 'samara', isProces
       <div
         className={
           isUser
-            ? 'bg-white/10 text-white rounded-2xl px-5 py-3 max-w-[85%] md:max-w-[75%] lg:max-w-[65%] font-body break-words'
+            ? 'bg-white/10 text-white rounded-2xl px-5 py-3 max-w-[85%] md:max-w-[75%] lg:max-w-[65%] font-body break-words whitespace-pre-wrap'
             : isArtery
-            ? 'bg-black border border-artery-green/30 text-artery-green rounded-none px-5 py-3 max-w-[85%] md:max-w-[75%] lg:max-w-[65%] font-artery terminal-prompt break-words'
-            : 'bg-white/10 text-white rounded-2xl p-4 max-w-[85%] md:max-w-[75%] lg:max-w-[65%] border border-white/10 font-samara break-words'
+            ? 'bg-transparent text-artery-green rounded-none px-5 py-3 max-w-[85%] md:max-w-[75%] lg:max-w-[65%] font-artery terminal-prompt break-words whitespace-pre-wrap'
+            : 'bg-white/10 text-white rounded-2xl p-4 max-w-[85%] md:max-w-[75%] lg:max-w-[65%] border border-white/10 font-samara break-words whitespace-pre-wrap'
         }
       >
-        {content}
+        {displayedContent}
+        {!isUser && displayedContent !== content && isArtery && (
+          <span className="inline-block w-2 h-4 bg-artery-green ml-1 animate-terminal-blink align-middle" />
+        )}
       </div>
     </motion.div>
   );

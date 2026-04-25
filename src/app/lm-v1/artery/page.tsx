@@ -41,12 +41,10 @@ export default function ArteryPage() {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-black bg-artery-grid relative overflow-hidden">
-      <div className="scan-line pointer-events-none z-50"></div>
-      <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_center,transparent_50%,rgba(0,0,0,0.4)_100%)] z-40"></div>
+    <div className="flex flex-col h-[100dvh] bg-background bg-artery-grid relative overflow-hidden">
       
       {/* Terminal Header */}
-      <header className="flex items-center justify-between px-6 py-3 border-b border-artery-green/30 bg-black">
+      <header className="flex items-center justify-between px-6 py-3 border-b border-artery-green/10 bg-background">
         <div className="flex items-center gap-3">
           <TerminalIcon className="w-5 h-5 text-artery-green" />
           <div className="font-artery font-bold text-xl tracking-widest">[ARTERY_CORE]</div>
@@ -56,7 +54,7 @@ export default function ArteryPage() {
       </header>
 
       {/* Terminal Output Area */}
-      <div className="flex-1 overflow-y-auto p-4 font-artery text-sm custom-scrollbar bg-black">
+      <div className="flex-1 overflow-y-auto p-4 font-artery text-sm custom-scrollbar bg-background">
         <Terminal />
         <AnimatePresence>
           {messages.map((msg, idx) => (
@@ -81,16 +79,26 @@ export default function ArteryPage() {
       </div>
 
       {/* Input Line */}
-      <div className="p-4 border-t border-artery-green/30 bg-black">
+      <div className="p-4 border-t border-artery-green/10 bg-background">
         <div className="flex gap-2 max-w-4xl mx-auto items-center">
           <span className="font-artery text-artery-green">{'>'}</span>
-          <input
-            type="text"
+          <textarea
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && handleSend()}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                handleSend();
+              }
+            }}
             placeholder="ENTER COMMAND..."
-            className="flex-1 bg-transparent border-none text-artery-green font-artery placeholder:text-artery-green/30 focus:outline-none"
+            rows={1}
+            className="flex-1 bg-transparent border-none text-artery-green font-artery placeholder:text-artery-green/30 focus:outline-none resize-none overflow-hidden max-h-32 py-1"
+            onInput={(e) => {
+              const target = e.target as HTMLTextAreaElement;
+              target.style.height = 'auto';
+              target.style.height = Math.min(target.scrollHeight, 128) + 'px';
+            }}
           />
           <button 
             onClick={handleSend} 
