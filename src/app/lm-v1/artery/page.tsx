@@ -43,6 +43,7 @@ export default function ArteryPage() {
   return (
     <div className="flex flex-col h-screen bg-black bg-artery-grid relative overflow-hidden">
       <div className="scan-line pointer-events-none z-50"></div>
+      <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_center,transparent_50%,rgba(0,0,0,0.4)_100%)] z-40"></div>
       
       {/* Terminal Header */}
       <header className="flex items-center justify-between px-6 py-3 border-b border-artery-green/30 bg-black">
@@ -60,7 +61,12 @@ export default function ArteryPage() {
         <AnimatePresence>
           {messages.map((msg, idx) => (
             <motion.div key={idx} initial={{ opacity: 0, x: -5 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.2 }}>
-              <ChatBubble role={msg.role as 'user' | 'assistant'} content={msg.content} persona="artery" />
+              <ChatBubble
+                role={msg.role as 'user' | 'assistant'}
+                content={msg.content}
+                persona="artery"
+                isProcessing={isProcessing && idx === messages.length - 1}
+              />
             </motion.div>
           ))}
         </AnimatePresence>

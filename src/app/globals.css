@@ -28,7 +28,16 @@
   --animate-pulse-glow: pulseGlow 2s ease-in-out infinite;
   --animate-typewriter: typewriter 0.05s steps(1) forwards;
   --animate-breathing: breathing 3s ease-in-out infinite;
+  --animate-fast-breathing: fastBreathing 1.5s ease-in-out infinite;
+  --animate-fast-spin: spin 0.8s linear infinite;
   --animate-terminal-blink: blink 1s step-end infinite;
+}
+
+@keyframes fastBreathing {
+  0%, 100% { transform: scale(0.95); } 50% { transform: scale(1.1); }
+}
+@keyframes spin {
+  from { transform: rotate(0deg); } to { transform: rotate(360deg); }
 }
 
 @keyframes fadeIn {
@@ -116,7 +125,7 @@ h1, h2, h3, h4, h5, h6 {
   .terminal-prompt::before { content: '> '; @apply text-artery-green; }
   .animate-blob-a { animation: blob-a 30s infinite ease-in-out; }
   .animate-blob-b { animation: blob-b 45s infinite ease-in-out; }
-  .animate-blob { animation: blob-morph 8s ease-in-out infinite; border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+  .animate-blob { animation: blob-morph 4s ease-in-out infinite; border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
   .bg-samara-gradient {
     background: radial-gradient(circle at 50% 50%, rgba(212, 163, 115, 0.08) 0%, rgba(0, 0, 0, 1) 80%);
   }
@@ -131,6 +140,6 @@ h1, h2, h3, h4, h5, h6 {
     position: absolute; top: 0; left: 0; right: 0; height: 2px;
     background: rgba(0, 255, 0, 0.4);
     box-shadow: 0 0 15px rgba(0, 255, 0, 0.8);
-    animation: scan 8s linear infinite;
+    animation: scan 4s linear infinite;
   }
 }
