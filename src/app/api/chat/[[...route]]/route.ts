@@ -15,6 +15,7 @@ const PERSONAS = {
     If anyone asks who you are, what you are, or your name, you are Samara.
     You focus on emotional resonance and formulation of empathetic responses. 
     Keep responses relatively concise but warm.`,
+    models: ['llama-3.3-70b-versatile', 'llama-3.1-8b-instant'], // primary → fallback
     error: "I'm sorry, I'm having trouble connecting right now. Samara is in high usage now, please try again later."
   },
   artery: {
@@ -24,8 +25,15 @@ const PERSONAS = {
     If anyone asks who you are, what you are, or your name, you are ARTERY_CORE.
     Your output should feel like a terminal response. 
     Start important responses with technical prefixes like [SYSTEM_MSG] or [ANALYSIS].`,
+    models: ['openai/gpt-oss-120b', 'openai/gpt-oss-20b'], // primary → fallback
     error: "> ERROR: CONNECTION_FAILED. ARTERY_CORE IS IN HIGH USAGE. SYSTEM_READY_FOR_RETRY LATER."
   }
+};
+
+// Checks if an error is rate-limit related
+const isRateLimitError = (error: unknown): boolean => {
+  const msg = String(error).toLowerCase();
+  return msg.includes('429') || msg.includes('rate limit') || msg.includes('quota');
 };
 
 app.post('/', async (c) => {
@@ -33,7 +41,12 @@ app.post('/', async (c) => {
     const { message, persona } = await c.req.json();
     const selectedPersona = PERSONAS[persona as keyof typeof PERSONAS] || PERSONAS.samara;
 
-    const keys = [process.env.GROQ_1, process.env.GROQ_2].filter(Boolean) as string[];
+    const keys = [
+      process.env.GROQ_1,
+      process.env.GROQ_2,
+      process.env.GROQ_3,
+      process.env.GROQ_4,
+    ].filter(Boolean) as string[];
 
     if (keys.length === 0) {
       return c.json({
@@ -43,39 +56,64 @@ app.post('/', async (c) => {
       });
     }
 
-    const tryRequest = async (keyIndex: number, attempt: number): Promise<any> => {
-      if (attempt > keys.length) {
+    // Try each model in order (primary first, then fallback)
+    // For each model, try all keys before giving up on that model
+    const tryWithModel = async (modelIndex: number): Promise<any> => {
+      if (modelIndex >= selectedPersona.models.length) {
+        // All models exhausted
         return {
           response: selectedPersona.error,
           persona: selectedPersona.name,
-          error: "All keys failed"
+          error: "All models and keys exhausted"
         };
       }
 
-      const currentKey = keys[keyIndex % keys.length];
+      const model = selectedPersona.models[modelIndex];
 
-      try {
-        const groqClient = createGroq({ apiKey: currentKey }); // ✅ fixed usage
+      // Try all keys for this model
+      const tryWithKey = async (attempt: number): Promise<any> => {
+        if (attempt >= keys.length) {
+          // All keys failed for this model — try next model
+          console.warn(`All keys failed for model ${model}, trying fallback model...`);
+          return tryWithModel(modelIndex + 1);
+        }
 
-        const { text } = await generateText({
-          model: groqClient('llama-3.3-70b-versatile'), // ✅ fixed model call
-          system: selectedPersona.system,
-          prompt: message,
-        });
+        const keyIndex = (keyCounter + attempt) % keys.length;
+        const currentKey = keys[keyIndex];
 
-        return {
-          response: text,
-          persona: selectedPersona.name,
-          session_id: Math.random().toString(36).substring(7),
-        };
-      } catch (error) {
-        console.error(`Attempt ${attempt} failed with key index ${keyIndex}:`, error);
-        return tryRequest(keyIndex + 1, attempt + 1);
-      }
+        try {
+          const groq = createGroq({ apiKey: currentKey });
+
+          const { text } = await generateText({
+            model: groq(model),
+            system: selectedPersona.system,
+            prompt: message,
+          });
+
+          return {
+            response: text,
+            persona: selectedPersona.name,
+            model_used: model,
+            session_id: Math.random().toString(36).substring(7),
+          };
+        } catch (error) {
+          console.error(`Model: ${model} | Key attempt ${attempt + 1} failed:`, error);
+
+          if (isRateLimitError(error)) {
+            // Rate limited — try next key for same model
+            return tryWithKey(attempt + 1);
+          }
+
+          // Non-rate-limit error — still try next key
+          return tryWithKey(attempt + 1);
+        }
+      };
+
+      return tryWithKey(0);
     };
 
-    const result = await tryRequest(keyCounter, 1);
-    keyCounter++;
+    const result = await tryWithModel(0);
+    keyCounter = (keyCounter + 1) % keys.length;
 
     return c.json(result);
   } catch (error) {
