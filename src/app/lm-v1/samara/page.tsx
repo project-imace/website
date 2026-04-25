@@ -59,7 +59,7 @@ export default function SamaraPage() {
       {/* Header */}
       <header className="flex items-center justify-between px-6 py-4 border-b border-white/10 bg-background/80 backdrop-blur">
         <div className="flex items-center gap-3">
-          <motion.div animate={{ scale: [1, 1.05, 1] }} transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}>
+          <motion.div animate={{ scale: [1, 1.05, 1] }} transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}>
             <div className="w-10 h-10 bg-samara-warm/80 animate-blob shadow-[0_0_15px_rgba(212,163,115,0.4)]"></div>
           </motion.div>
           <div>
@@ -76,7 +76,12 @@ export default function SamaraPage() {
           {messages.map((msg, idx) => (
             <motion.div key={idx} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}>
               {msg.role === 'assistant' && msg.thinking && <ThinkingTree steps={msg.thinking} />}
-              <ChatBubble role={msg.role as 'user' | 'assistant'} content={msg.content} persona="samara" />
+              <ChatBubble
+                role={msg.role as 'user' | 'assistant'}
+                content={msg.content}
+                persona="samara"
+                isProcessing={isTyping && idx === messages.length - 1}
+              />
             </motion.div>
           ))}
         </AnimatePresence>
