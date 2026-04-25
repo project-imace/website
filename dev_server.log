@@ -1,0 +1,11 @@
+
+> imace-website@0.1.0 dev
+> next dev
+
+▲ Next.js 16.2.4 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.0.2:3000
+✓ Ready in 562ms
+
+○ Compiling /lm-v1/samara ...
+ GET /lm-v1/samara 200 in 6.5s (next.js: 6.0s, application-code: 483ms)

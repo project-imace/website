@@ -55,9 +55,9 @@ export default function SamaraPage() {
   };
 
   return (
-    <div className="flex flex-col h-[100dvh] bg-background bg-samara-gradient relative overflow-hidden">
+    <div className="fixed inset-0 flex flex-col bg-background bg-samara-gradient overflow-hidden">
       {/* Header */}
-      <header className="flex items-center justify-between px-6 py-4 border-b border-white/10 bg-background/80 backdrop-blur">
+      <header className="shrink-0 flex items-center justify-between px-6 py-4 border-b border-white/10 bg-background/80 backdrop-blur">
         <div className="flex items-center gap-3">
           <motion.div animate={{ scale: [1, 1.05, 1] }} transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}>
             <div className="w-10 h-10 bg-samara-warm/80 animate-blob shadow-[0_0_15px_rgba(212,163,115,0.4)]"></div>
@@ -100,8 +100,8 @@ export default function SamaraPage() {
       </div>
 
       {/* Input Area */}
-      <div className="p-4 border-t border-white/10 bg-surface/50 backdrop-blur">
-        <div className="flex gap-3 max-w-4xl mx-auto">
+      <div className="shrink-0 p-4 border-t border-white/10 bg-surface/50 backdrop-blur">
+        <div className="flex items-end gap-3 max-w-4xl mx-auto">
           <textarea
             value={input}
             onChange={(e) => setInput(e.target.value)}
