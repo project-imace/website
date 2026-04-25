@@ -41,10 +41,10 @@ export default function ArteryPage() {
   };
 
   return (
-    <div className="flex flex-col h-[100dvh] bg-background bg-artery-grid relative overflow-hidden">
+    <div className="fixed inset-0 flex flex-col bg-background bg-artery-grid overflow-hidden">
       
       {/* Terminal Header */}
-      <header className="flex items-center justify-between px-6 py-3 border-b border-artery-green/10 bg-background">
+      <header className="shrink-0 flex items-center justify-between px-6 py-3 border-b border-artery-green/10 bg-background">
         <div className="flex items-center gap-3">
           <TerminalIcon className="w-5 h-5 text-artery-green" />
           <div className="font-artery font-bold text-xl tracking-widest">[ARTERY_CORE]</div>
@@ -79,8 +79,8 @@ export default function ArteryPage() {
       </div>
 
       {/* Input Line */}
-      <div className="p-4 border-t border-artery-green/10 bg-background">
-        <div className="flex gap-2 max-w-4xl mx-auto items-center">
+      <div className="shrink-0 p-4 border-t border-artery-green/10 bg-background">
+        <div className="flex items-end gap-2 max-w-4xl mx-auto">
           <span className="font-artery text-artery-green">{'>'}</span>
           <textarea
             value={input}
