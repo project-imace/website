@@ -43,54 +43,60 @@ export default function ArteryPage() {
   return (
     <div className="flex flex-col h-screen bg-black bg-artery-grid relative overflow-hidden">
       <div className="scan-line pointer-events-none z-50"></div>
+      <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_center,transparent_50%,rgba(0,0,0,0.4)_100%)] z-40"></div>
       
       {/* Terminal Header */}
-      <header className="flex items-center justify-between px-6 py-3 border-b border-artery-green/30 bg-black">
+      <header className="flex items-center justify-between px-6 py-3 border-b border-samara-warm/30 bg-black">
         <div className="flex items-center gap-3">
-          <TerminalIcon className="w-5 h-5 text-artery-green" />
-          <div className="font-artery font-bold text-xl tracking-widest">[ARTERY_CORE]</div>
-          <span className="font-artery text-artery-green/60 text-sm ml-2">v1.0</span>
+          <img src="https://assets.imace.online/image/arteryicon.svg" className="w-6 h-6 animate-fast-spin" alt="Artery" />
+          <div className="font-artery font-bold text-xl tracking-widest text-samara-warm">[ARTERY_CORE]</div>
+          <span className="font-artery text-samara-warm/60 text-sm ml-2">v1.0</span>
         </div>
-        <div className="font-artery text-artery-green/40 text-xs">SESSION: {new Date().toISOString().slice(0, 10)}</div>
+        <div className="font-artery text-samara-warm/40 text-xs">SESSION: {new Date().toISOString().slice(0, 10)}</div>
       </header>
 
       {/* Terminal Output Area */}
-      <div className="flex-1 overflow-y-auto p-4 font-artery text-sm custom-scrollbar bg-black">
+      <div className="flex-1 overflow-y-auto p-4 font-artery text-sm custom-scrollbar bg-black text-samara-warm">
         <Terminal />
         <AnimatePresence>
           {messages.map((msg, idx) => (
             <motion.div key={idx} initial={{ opacity: 0, x: -5 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.2 }}>
-              <ChatBubble role={msg.role as 'user' | 'assistant'} content={msg.content} persona="artery" />
+              <ChatBubble
+                role={msg.role as 'user' | 'assistant'}
+                content={msg.content}
+                persona="artery"
+                isProcessing={isProcessing && idx === messages.length - 1}
+              />
             </motion.div>
           ))}
         </AnimatePresence>
         
         {isProcessing && (
-          <div className="font-artery text-artery-green/60 animate-pulse">
+          <div className="font-artery text-samara-warm/60 animate-pulse">
             <span className="terminal-prompt">PROCESSING</span>
-            <span className="inline-block w-2 h-4 bg-artery-green ml-1 animate-terminal-blink" />
+            <span className="inline-block w-2 h-4 bg-samara-warm ml-1 animate-terminal-blink" />
           </div>
         )}
         <div ref={messagesEndRef} />
       </div>
 
       {/* Input Line */}
-      <div className="p-4 border-t border-artery-green/30 bg-black">
+      <div className="p-4 border-t border-samara-warm/30 bg-black">
         <div className="flex gap-2 max-w-4xl mx-auto items-center">
-          <span className="font-artery text-artery-green">{'>'}</span>
+          <span className="font-artery text-samara-warm">{'>'}</span>
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleSend()}
             placeholder="ENTER COMMAND..."
-            className="flex-1 bg-transparent border-none text-artery-green font-artery placeholder:text-artery-green/30 focus:outline-none"
+            className="flex-1 bg-transparent border-none text-samara-warm font-artery placeholder:text-samara-warm/30 focus:outline-none"
           />
           <button 
             onClick={handleSend} 
             disabled={!input.trim()} 
             aria-label="Send" 
-            className="text-artery-green/60 hover:text-artery-green disabled:opacity-50 transition-opacity"
+            className="text-samara-warm/60 hover:text-samara-warm disabled:opacity-50 transition-opacity"
           >
             <Send className="w-4 h-4" />
           </button>

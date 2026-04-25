@@ -1,0 +1,13 @@
+
+> imace-website@0.1.0 dev
+> next dev
+
+▲ Next.js 16.2.4 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.0.2:3000
+✓ Ready in 957ms
+
+ GET /lm-v1/samara 200 in 1067ms (next.js: 463ms, application-code: 604ms)
+ POST /api/chat 200 in 2.0s (next.js: 1991ms, application-code: 38ms)
+ GET /lm-v1/artery 200 in 140ms (next.js: 24ms, application-code: 115ms)
+ POST /api/chat 200 in 30ms (next.js: 19ms, application-code: 11ms)

@@ -23,15 +23,20 @@ export default function Terminal() {
       } else {
         clearInterval(interval);
       }
-    }, 80);
+    }, 30);
     return () => clearInterval(interval);
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <div className="font-artery text-artery-green/70 text-sm mb-4">
+    <div className="font-artery text-samara-warm/70 text-sm mb-4">
       {bootText.map((line, i) => (
-        <div key={i}>{line}</div>
+        <div key={i}>
+          <span>{line}</span>
+          {i === bootText.length - 1 && bootText.length < lines.length && (
+            <span className="inline-block w-2 h-4 bg-samara-warm ml-1 animate-terminal-blink" />
+          )}
+        </div>
       ))}
     </div>
   );
