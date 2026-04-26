@@ -8,9 +8,10 @@ interface ChatBubbleProps {
   content: string;
   persona?: 'samara' | 'artery';
   isProcessing?: boolean;
+  onUpdate?: () => void;
 }
 
-export default function ChatBubble({ role, content, persona = 'samara', isProcessing = false }: ChatBubbleProps) {
+export default function ChatBubble({ role, content, persona = 'samara', isProcessing = false, onUpdate }: ChatBubbleProps) {
   const isUser = role === 'user';
   const isArtery = persona === 'artery';
 
@@ -30,13 +31,16 @@ export default function ChatBubble({ role, content, persona = 'samara', isProces
       if (currentIndex < content.length - 1) {
         setDisplayedContent(prev => prev + content[currentIndex]);
         currentIndex++;
+        if (onUpdate) onUpdate();
       } else {
         setDisplayedContent(content);
+        if (onUpdate) onUpdate();
         clearInterval(interval);
       }
     }, intervalTime);
 
     return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [content, isUser, isArtery]);
 
   return (
