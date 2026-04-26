@@ -5,7 +5,7 @@ import ThinkingTree from '@/features/chat/components/ThinkingTree';
 import { sendChatMessage } from '@/lib/chat';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Heart, Send } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 export default function SamaraPage() {
   const [messages, setMessages] = useState<Array<{role: string; content: string; thinking?: string[]}>>([]);
@@ -14,9 +14,11 @@ export default function SamaraPage() {
   const [, setIsThinking] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const scrollToBottom = () => messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  const scrollToBottom = useCallback(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'auto' });
+  }, []);
 
-  useEffect(() => { scrollToBottom(); }, [messages]);
+  useEffect(() => { scrollToBottom(); }, [messages, scrollToBottom]);
 
   const handleSend = async () => {
     if (!input.trim()) return;
@@ -55,7 +57,7 @@ export default function SamaraPage() {
   };
 
   return (
-    <div className="fixed inset-0 flex flex-col bg-background bg-samara-gradient overflow-hidden">
+    <div className="fixed top-0 left-0 h-[100dvh] w-full flex flex-col bg-background bg-samara-gradient overflow-hidden">
       {/* Header */}
       <header className="shrink-0 flex items-center justify-between px-6 py-4 border-b border-white/10 bg-background/80 backdrop-blur">
         <div className="flex items-center gap-3">
@@ -81,6 +83,7 @@ export default function SamaraPage() {
                 content={msg.content}
                 persona="samara"
                 isProcessing={isTyping && idx === messages.length - 1}
+                onUpdate={scrollToBottom}
               />
             </motion.div>
           ))}

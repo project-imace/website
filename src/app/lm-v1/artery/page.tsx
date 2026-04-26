@@ -5,7 +5,7 @@ import Terminal from '@/features/chat/components/Terminal';
 import { sendChatMessage } from '@/lib/chat';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Send, Terminal as TerminalIcon } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 export default function ArteryPage() {
   const [messages, setMessages] = useState<Array<{role: string; content: string}>>([]);
@@ -13,9 +13,11 @@ export default function ArteryPage() {
   const [isProcessing, setIsProcessing] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => { 
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' }); 
-  }, [messages]);
+  const scrollToBottom = useCallback(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'auto' });
+  }, []);
+
+  useEffect(() => { scrollToBottom(); }, [messages, scrollToBottom]);
 
   const handleSend = async () => {
     if (!input.trim()) return;
@@ -41,7 +43,7 @@ export default function ArteryPage() {
   };
 
   return (
-    <div className="fixed inset-0 flex flex-col bg-background bg-artery-grid overflow-hidden">
+    <div className="fixed top-0 left-0 h-[100dvh] w-full flex flex-col bg-background bg-artery-grid overflow-hidden">
       
       {/* Terminal Header */}
       <header className="shrink-0 flex items-center justify-between px-6 py-3 border-b border-artery-green/10 bg-background">
@@ -64,6 +66,7 @@ export default function ArteryPage() {
                 content={msg.content}
                 persona="artery"
                 isProcessing={isProcessing && idx === messages.length - 1}
+                onUpdate={scrollToBottom}
               />
             </motion.div>
           ))}
