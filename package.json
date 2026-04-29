@@ -16,7 +16,7 @@
     "critters": "^0.0.25",
     "framer-motion": "^12.38.0",
     "hono": "^4.12.15",
-    "lucide-react": "^1.8.0",
+    "lucide-react": "^1.14.0",
     "next": "16.2.4",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
