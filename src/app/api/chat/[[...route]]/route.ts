@@ -7,6 +7,13 @@ const app = new Hono().basePath('/api/chat');
 
 let keyCounter = 0;
 
+const GROQ_KEYS = [
+  process.env.GROQ_1,
+  process.env.GROQ_2,
+  process.env.GROQ_3,
+  process.env.GROQ_4,
+].filter(Boolean) as string[];
+
 const PERSONAS = {
   samara: {
     name: 'Samara',
@@ -44,14 +51,7 @@ app.post('/', async (c) => {
     const { message, persona } = await c.req.json();
     const selectedPersona = PERSONAS[persona as keyof typeof PERSONAS] || PERSONAS.samara;
 
-    const keys = [
-      process.env.GROQ_1,
-      process.env.GROQ_2,
-      process.env.GROQ_3,
-      process.env.GROQ_4,
-    ].filter(Boolean) as string[];
-
-    if (keys.length === 0) {
+    if (GROQ_KEYS.length === 0) {
       return c.json({
         response: selectedPersona.error,
         persona: selectedPersona.name,
@@ -75,14 +75,14 @@ app.post('/', async (c) => {
 
       // Try all keys for this model
       const tryWithKey = async (attempt: number): Promise<any> => {
-        if (attempt >= keys.length) {
+        if (attempt >= GROQ_KEYS.length) {
           // All keys failed for this model — try next model
           console.warn(`All keys failed for model ${model}, trying fallback model...`);
           return tryWithModel(modelIndex + 1);
         }
 
-        const keyIndex = (keyCounter + attempt) % keys.length;
-        const currentKey = keys[keyIndex];
+        const keyIndex = (keyCounter + attempt) % GROQ_KEYS.length;
+        const currentKey = GROQ_KEYS[keyIndex];
 
         try {
           const groq = createGroq({ apiKey: currentKey });
@@ -116,7 +116,7 @@ app.post('/', async (c) => {
     };
 
     const result = await tryWithModel(0);
-    keyCounter = (keyCounter + 1) % keys.length;
+    keyCounter = (keyCounter + 1) % GROQ_KEYS.length;
 
     return c.json(result);
   } catch (error) {
