@@ -14,7 +14,7 @@ export default function LMv1LandingPage() {
           <Image src="https://assets.imace.online/image/imace.svg" alt="IMACE" width={80} height={24} className="h-6 w-auto" />
         </Link>
         <nav className="ml-auto flex gap-6">
-          <a href="https://github.com/project-imace" target="_blank" rel="no-referrer" className="text-white/60 hover:text-white transition">GitHub</a>
+          <a href="https://github.com/project-imace" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-white transition">GitHub</a>
           <a href="mailto:reach@imace.online" className="text-white/60 hover:text-white transition">Contact</a>
         </nav>
       </header>
