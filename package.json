@@ -11,17 +11,17 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@ai-sdk/groq": "^3.0.35",
-    "ai": "^6.0.168",
+    "@ai-sdk/groq": "^3.0.39",
+    "ai": "^6.0.177",
     "clsx": "^2.1.1",
     "critters": "^0.0.25",
     "framer-motion": "^12.38.0",
-    "hono": "^4.12.15",
-    "lucide-react": "^1.8.0",
-    "next": "16.2.4",
-    "react": "^19.2.5",
-    "react-dom": "^19.2.5",
-    "tailwind-merge": "^3.5.0"
+    "hono": "^4.12.18",
+    "lucide-react": "^1.14.0",
+    "next": "16.2.6",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "tailwind-merge": "^3.6.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^2.1.4",
